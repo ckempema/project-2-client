@@ -52,4 +52,4 @@
     - High functionality AI opponent implemented using Dikstra's algorithm combined with a minimax or Monte Carlo tree
     - Select a game board size of 7, 9, or 11 hexagons square
 
-## Tasks
+## Resources
