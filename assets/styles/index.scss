@@ -3,7 +3,9 @@
 $hex-size: 30px; // Only change size here. Best used with sizes from 5em - 10em.
 $page-background: #aaa;
 $hex-background: #ccc;
-$hover-red: #f58787;
+$hover-color: #999999;
+$mark-red: #dd3b3b;
+$mark-blue: #4286f4;
 
 body {
   background: $page-background;
@@ -38,7 +40,7 @@ body {
   width: $hex-size;
 
   &:hover {
-    background: $hover-red;
+    background: $hover-color;
     cursor: crosshair;
   }
 
@@ -64,6 +66,16 @@ body {
 }
 
 .hidden {
-  background: #fff !important;
+  background: $page-background !important;
+  cursor: initial !important;
+}
+
+.red {
+  background: $mark-red !important;
+  cursor: initial !important;
+}
+
+.blue {
+  background: $mark-blue !important;
   cursor: initial !important;
 }
