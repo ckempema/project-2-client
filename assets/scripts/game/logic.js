@@ -21,8 +21,8 @@ const setupBoard = (size) => {
 }
 
 const onNodeClick = (row, col) => {
+  // Validate that a current game exists
   if (store.currentGame !== null && store.currentGame !== undefined) {
-    console.log(`Setting [${row}, ${col}]`) // NOTE: Remove console log
     store.currentGame.takeTurn(row, col)
   } else {
     console.log('No Game Created') // NOTE: Remove console log
