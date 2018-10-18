@@ -61,3 +61,5 @@
   ![Wireframe Version 1](public/Wireframe_V1.png)
 ### ERB
   ![ERB Sketch V1](public/ERB_V1.png)
+### Basic File Structure
+  ![File Structure Image](public/fileStructure_V1.png)
