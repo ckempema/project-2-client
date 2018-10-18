@@ -4,8 +4,9 @@
 
 const drawBoard = (size) => {
   // row one
+  $('#gameBoard').html('') // Empty the gameboard
   for (let i = 0; i < size + 2; i++) {
-    const rowID = `#row_${i}`
+    const rowID = `#row-${i}`
     const rowHTML = `<ol id=${rowID.slice(1, rowID.length)}> </ol>`
     $('#gameBoard').append(rowHTML)
 
@@ -18,14 +19,13 @@ const drawBoard = (size) => {
     // TODO: Clean this function up to the point of readable
     // TODO: Fix for all sizes; i.e drawBoard(5) or (7) doesent work
     for (let j = 0; j < size + Math.floor(2 / 3 * size); j++) { // Add hexes
-      const hexID = `#hex_${i}_${j}`
       if ((i > 0 && i < size + 1) && j > Math.ceil(i / 2) - 1 && j - size < Math.ceil(i / 2)) {
         const relX = i - 1
         const relY = j - Math.ceil(i / 2)
-        const id = `gameHex_${relX}_${relY}`
-
+        const id = `gameHex-${relX}-${relY}`
         $(rowID).append(`<li id="${id}"" class=hex></li>\n`)
       } else {
+        const hexID = `#hex-${i}-${j}`
         $(rowID).append(`<li id="${hexID.slice(1, hexID.length)}"" class=hex></li>\n`)
         if (i === 0 && (j < size + 1)) { // Top row blue
           $(hexID).addClass('blue')
