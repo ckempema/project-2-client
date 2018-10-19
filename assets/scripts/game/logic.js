@@ -24,10 +24,8 @@ const onNodeClick = (row, col) => {
   // Validate that a current game exists
   // TODO: Write function header
 
-  console.log(row, col)
   if (store.currentGame !== null && store.currentGame !== undefined) {
     store.currentGame.takeTurn(row, col)
-    console.log(store.currentGame)
   } else {
     console.log('No Game Created') // NOTE: Remove console log
   }

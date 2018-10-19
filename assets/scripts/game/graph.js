@@ -124,6 +124,8 @@ class Graph {
         console.log(`graph/takeTurn failed to setNode(${row},${col})`) // NOTE: log
         // TODO: Output turn failure messages to html here
       }
+    } else {
+      // TODO: Output game over failure message to html here
     }
   }
 
@@ -191,7 +193,6 @@ class Graph {
     if (data[`${this.currentPlayer}2`].dist < Infinity) { // if path exists
       let current = this.board[`${this.currentPlayer}2`]
       while (data[current.id].prev !== undefined && data[current.id].prev !== null) {
-        console.log(current)
         $(`#gameHex-${current.row}-${current.col}`).addClass(`win_${this.currentPlayer}`)
         current = this.board[data[current.id].prev] // Go to previous node
       }
