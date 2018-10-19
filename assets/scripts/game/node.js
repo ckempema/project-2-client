@@ -8,7 +8,7 @@ class Node {
     this.col = col
     this.fill = null
     this.allEdges = {}
-    this.controlledEdges = []
+    this.coloredEdges = {}
   }
 
   setNode (fill) {

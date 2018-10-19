@@ -3,9 +3,11 @@
 $hex-size: 30px; // Only change size here. Best used with sizes from 5em - 10em.
 $page-background: #aaa;
 $hex-background: #ccc;
-$hover-color: #999999;
+$hover-color: #999;
 $mark-red: #dd3b3b;
-$mark-blue: #4286f4;
+$mark-blue: #4b4bee;
+$win-red: #f00; //TODO Make reds and blues more distint for win conditions
+$win-blue: #00f;
 
 body {
   background: $page-background;
@@ -78,4 +80,12 @@ body {
 .blue {
   background: $mark-blue !important;
   cursor: initial !important;
+}
+
+.win_R {
+  background: $win-red !important;
+}
+
+.win_B {
+  background: $win-blue !important
 }

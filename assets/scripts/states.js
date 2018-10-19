@@ -1,9 +1,7 @@
 'use strict'
 
-// TODO: Add states functions as necessary for authentication and gameplay
-
 const drawBoard = (size) => {
-  // row one
+  // WARNING: DO NOT CHANGE THIS FUNCTION WITHOUT TIME TO FIX EVERYTHING YOU JUST MESSED UP. This function is a raging clusterf**k and should absolutely be fixed, hower any minor change, no matter how small, will screw things up and be very annoying. So a total rewrite will be required. Be warned
   $('#gameBoard').html('') // Empty the gameboard
   for (let i = 0; i < size + 2; i++) {
     const rowID = `#row-${i}`
