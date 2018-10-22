@@ -19,9 +19,9 @@ const connectBoard = (size) => {
 
 const onNewGame = () => {
   event.preventDefault()
-  api.newGame()
+  const size = 9 // TODO Make Dynamic
+  api.newGame(size)
     .then(() => {
-      const size = 9 // TODO Make dynamic
       ui.newGameSuccess()
       connectBoard(size)
       store.currentGame = new Graph(size)
