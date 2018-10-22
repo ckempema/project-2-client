@@ -1,3 +1,4 @@
+@import "~bootstrap/scss/bootstrap";
 
 $hex-size: 30px; // Only change size here. Best used with sizes from 5em - 10em.
 $page-background: #aaa;
@@ -12,19 +13,19 @@ body {
   background: $page-background;
 }
 
-.container {
+.cont {
   line-height: $hex-size * 1.2;
   //width: 1000px;
 }
 
 .even {
-  left: $hex-size * .9;
+  left: $hex-size * .90;
   position: relative;
 }
 
 .odd {
-  margin-bottom: $hex-size * -1.2;
-  margin-top: $hex-size * -1.2;
+  margin-bottom: $hex-size * -.9; //Odd-even
+  margin-top: $hex-size * -1.45; // Even-odd
   position: relative;
 }
 
