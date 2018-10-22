@@ -193,7 +193,7 @@ class Graph {
     if (data[`${this.currentPlayer}2`].dist < Infinity) { // if path exists
       let current = this.board[`${this.currentPlayer}2`]
       while (data[current.id].prev !== undefined && data[current.id].prev !== null) {
-        $(`#gameHex-${current.row}-${current.col}`).addClass(`win_${this.currentPlayer}`)
+        $(`#gameHex-${current.row}-${current.col}`).addClass(`win-${this.currentPlayer}`)
         current = this.board[data[current.id].prev] // Go to previous node
       }
       this.status.over = true

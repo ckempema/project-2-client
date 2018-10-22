@@ -2,6 +2,8 @@
 // TODO: Implement game logic here
 const store = require('../store.js')
 const Graph = require('./graph.js')
+const api = require('./api.js')
+const ui = require('./ui.js')
 // const Node = require('./node.js')
 
 const connectBoard = (size) => {
@@ -15,9 +17,16 @@ const connectBoard = (size) => {
   }
 }
 
-const setupBoard = (size) => {
-  store.currentGame = new Graph(9)
-  connectBoard(size)
+const onNewGame = () => {
+  event.preventDefault()
+  api.newGame()
+    .then(() => {
+      const size = 9 // TODO Make dynamic
+      ui.newGameSuccess()
+      connectBoard(size)
+      store.currentGame = new Graph(size)
+    })
+    .catch(ui.failure)
 }
 
 const onNodeClick = (row, col) => {
@@ -32,6 +41,6 @@ const onNodeClick = (row, col) => {
 }
 
 module.exports = {
-  setupBoard,
+  onNewGame,
   onNodeClick
 }

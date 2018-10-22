@@ -1,16 +1,22 @@
-@import "~bootstrap/scss/bootstrap";
+@import '~bootstrap/scss/bootstrap';
 
 $hex-size: 30px; // Only change size here. Best used with sizes from 5em - 10em.
 $page-background: #aaa;
 $hex-background: #ccc;
 $hover-color: #999;
-$mark-red: #dd3b3b;
-$mark-blue: #4b4bee;
-$win-red: #000; //TODO Make reds and blues more distint for win conditions
+$mark-red: $red;// #dd3b3b;
+$mark-blue: $blue; //#4b4bee;
+$win-red: #000; //TODO Make reds and blues more distinct for win conditions
 $win-blue: #000;
 
 body {
   background: $page-background;
+}
+
+
+.navbar-nav {
+  flex-direction: row;
+  margin: 5px;
 }
 
 .cont {
@@ -19,7 +25,7 @@ body {
 }
 
 .even {
-  left: $hex-size * .90;
+  left: $hex-size * .9;
   position: relative;
 }
 
@@ -65,6 +71,17 @@ body {
   }
 }
 
+.navbar {
+  height: 60px;
+  min-height: 60px;
+}
+
+.navbar-nav>button {
+        float: none;
+        text-align: center;
+        display: inline-block;
+    }
+
 .hidden {
   background: $page-background !important;
   cursor: initial !important;
@@ -80,10 +97,10 @@ body {
   cursor: initial !important;
 }
 
-.win_R {
+.win-R {
   background: $win-red !important;
 }
 
-.win_B {
+.win-B {
   background: $win-blue !important
 }

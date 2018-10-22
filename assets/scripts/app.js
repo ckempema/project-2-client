@@ -1,15 +1,28 @@
 'use strict'
 
-// use require with a reference to bundle the file and use it in this file
-// const example = require('./example')
-
-// use require without a reference to ensure a file is bundled
-// require('./example')
+const authEvents = require('./auth/events.js')
 const states = require('./states.js')
 const logic = require('./game/logic.js')
 
 $(() => {
-  const size = 9
-  states.drawBoard(size)
-  logic.setupBoard(size)
+  states.signedOut()
+  initEventListeners()
 })
+
+const initEventListeners = () => {
+  $('#sign-up-form').on('submit', authEvents.onSignUp)
+  $('#sign-in-form').on('submit', authEvents.onSignIn)
+  $('#change-password-form').on('submit', authEvents.onChangePassword)
+  $('#sign-out-button').on('click', authEvents.onSignOut)
+
+  $('#new-game-button').on('click', logic.onNewGame)
+
+  $('#show-sign-in-button').on('click', () => { $('#sign-in-box').show() })
+  $('#cancel-sign-in-button').on('click', () => { $('#sign-in-box').hide() })
+
+  $('#show-sign-up-button').on('click', () => { $('#sign-up-box').show() })
+  $('#cancel-sign-up-button').on('click', () => { $('#sign-up-box').hide() })
+
+  $('#show-ch-pwd-button').on('click', () => { $('#ch-pwd-box').show() })
+  $('#cancel-ch-pwd-button').on('click', () => { $('#ch-pwd-box').hide() })
+}
