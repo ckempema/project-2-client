@@ -1,4 +1,3 @@
-//@import "compass/css3";
 
 $hex-size: 30px; // Only change size here. Best used with sizes from 5em - 10em.
 $page-background: #aaa;
@@ -24,10 +23,8 @@ body {
 }
 
 .odd {
-  //margin-bottom: -6.5%;
-  //margin-top: -6.5%;
-  margin-bottom: $hex-size * -1.5;
-  margin-top: $hex-size * -1.5;
+  margin-bottom: $hex-size * -1.2;
+  margin-top: $hex-size * -1.2;
   position: relative;
 }
 
@@ -36,7 +33,7 @@ body {
   display: inline-block;
   height: $hex-size * 1.7; //DO NOT CHANGE THIS ONE EVER!!!!!
   margin: $hex-size * .2;
-  margin-right: $hex-size * .50;
+  margin-right: $hex-size * .5;
   position: relative;
   transform: rotate(-90deg);
   width: $hex-size;
