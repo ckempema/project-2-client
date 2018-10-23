@@ -35,11 +35,26 @@ class Graph {
         idCount++
       }
     }
-    this.generateBorderEdges()
-    this.setAllEdges()
+
+    this.setNodesFromMoves() // Fills in the appropriate colors for moves made
+    this.generateBorderEdgeRelationships() // Generates the border nodes
+    this.setAllEdgeRelationships() // Generates all edges for all nodes
+    this.checkWin()
   }
 
-  generateBorderEdges () {
+  setNodesFromMoves () {
+    let mutMoves = this.moves
+    while (mutMoves.length > 0) {
+      const row = parseInt(mutMoves.substr(0, 1), 16)
+      const col = parseInt(mutMoves.substr(1, 1), 16)
+      const color = mutMoves.substr(2, 1)
+      this.board[row * this.size + col].setNode(color, this.id)
+      mutMoves = mutMoves.slice(3, mutMoves.length)
+      this.complexity += 1 // increment complexity
+    }
+  }
+
+  generateBorderEdgeRelationships () {
     /* Sets the imaginary nodes appropriatly within the graph, allowing for a checkwin based on IDs of `B1`, `B2`,  `R1`, and `R2` */
     const B1 = new Node('B1', Infinity, Infinity)
     const B2 = new Node('B2', Infinity, Infinity)
@@ -74,7 +89,7 @@ class Graph {
     this.blue.push(B2)
   }
 
-  setNodeEdges (row, col) {
+  setNodeEdgeRelationships (row, col) {
     /* tests all nodes contained as adjustments to gameboard row and col in array possible. Then sets them based on color */
     const possible = [[-1, 0], [-1, 1], [0, -1], [0, 1], [1, -1], [1, 0]]
 
@@ -99,14 +114,23 @@ class Graph {
           }
         }
       }
+      if (currentNode.fill === 'R') {
+        if (!this.red.includes(currentNode)) {
+          this.red.push(currentNode)
+        }
+      } else if (currentNode.fill === 'B') {
+        if (!this.blue.includes(currentNode)) {
+          this.blue.push(currentNode)
+        }
+      }
     }
   }
 
-  setAllEdges () {
+  setAllEdgeRelationships () {
     /* Dynamically sets all node edges */
     for (let row = 0; row < this.size; row++) {
       for (let col = 0; col < this.size; col++) {
-        this.setNodeEdges(row, col)
+        this.setNodeEdgeRelationships(row, col)
       }
     }
   }
@@ -114,13 +138,8 @@ class Graph {
   takeTurn (row, col) {
     if (!this.status.over) { // While the game is not over
       const currentNode = this.board[row * this.size + col]
-      if (currentNode.setNode(this.currentPlayer)) { // Set the node
-        if (this.currentPlayer === 'R') { // Store in correct node/edge array
-          this.red.push(currentNode)
-        } else if (this.currentPlayer === 'B') {
-          this.blue.push(currentNode)
-        }
-        this.setNodeEdges(row, col) // Check the edges of the adjacent nodes
+      if (currentNode.setNode(this.currentPlayer, this.id)) { // Set the node
+        this.setNodeEdgeRelationships(row, col) // Check the edges of the adjacent nodes
         this.checkWin()
         const moveStr = row.toString(16) + col.toString(16) + this.currentPlayer
         this.moves += moveStr
@@ -198,7 +217,7 @@ class Graph {
     if (data[`${this.currentPlayer}2`].dist < Infinity) { // if path exists
       let current = this.board[`${this.currentPlayer}2`]
       while (data[current.id].prev !== undefined && data[current.id].prev !== null) {
-        $(`#gameHex-${current.row}-${current.col}`).addClass(`win-${this.currentPlayer}`)
+        $(`#${this.id}-gameHex-${current.row}-${current.col}`).addClass(`win-${this.currentPlayer}`)
         current = this.board[data[current.id].prev] // Go to previous node
       }
       this.status.over = true

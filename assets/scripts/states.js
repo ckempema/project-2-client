@@ -29,6 +29,7 @@ const resetData = () => {
   $('#gameBoard').html('')
   $('#game-messages').html('')
   $('#user-message').html('')
+  $('#show-games-section').html('')
 }
 module.exports = {
   signedOut,

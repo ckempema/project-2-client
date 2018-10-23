@@ -11,7 +11,7 @@ class Node {
     this.coloredEdges = {}
   }
 
-  setNode (fill) {
+  setNode (fill, gameID) {
     /* if possible, set the nodes fill to either red or blue, using jquery to add classes to the appropriate node as well as using validation to ensure the fill is empty and a vaild input was passed
 
     Returns true if set, otherwise false */
@@ -19,11 +19,11 @@ class Node {
       switch (fill) {
         case 'R':
           this.fill = fill
-          $(`#gameHex-${this.row}-${this.col}`).addClass('red')
+          $(`#${gameID}-gameHex-${this.row}-${this.col}`).addClass('red')
           return true
         case 'B':
           this.fill = fill
-          $(`#gameHex-${this.row}-${this.col}`).addClass('blue')
+          $(`#${gameID}-gameHex-${this.row}-${this.col}`).addClass('blue')
           return true
         default:
           console.log(`INVALID node/setNode: ${fill} `) // NOTE: remove log

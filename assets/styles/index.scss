@@ -1,6 +1,7 @@
 @import '~bootstrap/scss/bootstrap';
 
-$hex-size: 30px; // Only change size here. Best used with sizes from 5em - 10em.
+$hex-size: 30px; // Only change hex size here
+$small-hex-size: 8px;
 $page-background: #aaa;
 $hex-background: #ccc;
 $hover-color: #999;
@@ -73,16 +74,63 @@ body {
   }
 }
 
+.cont-small {
+  line-height: $small-hex-size * 1.2;
+  // width: 800px;
+}
+
+.even-small {
+  left: $small-hex-size * 1.0;
+  position: relative;
+}
+
+.odd-small {
+  margin-bottom: -1px; //Odd-even
+  margin-top: -18px; // Even-odd
+  position: relative;
+}
+
+.hex-small {
+  background: $hex-background;
+  display: inline-block;
+  height: $small-hex-size * 1.7; //DO NOT CHANGE THIS ONE EVER!!!!!
+  margin: $small-hex-size * .1;
+  margin-right: $small-hex-size * .5;
+  position: relative;
+  transform: rotate(-90deg);
+  width: $small-hex-size;
+
+  &::before {
+    background: inherit;
+    border-radius: inherit;
+    content: '';
+    height: inherit;
+    position: absolute;
+    transform: rotate(60deg);
+    width: inherit;
+  }
+
+  &::after {
+    background: inherit;
+    border-radius: inherit;
+    content: '';
+    height: inherit;
+    position: absolute;
+    transform: rotate(-60deg);
+    width: inherit;
+  }
+}
+
 .navbar {
   height: 60px;
   min-height: 60px;
 }
 
 .navbar-nav>button {
-        float: none;
-        text-align: center;
-        display: inline-block;
-    }
+  display: inline-block;
+  float: none;
+  text-align: center;
+}
 
 .hidden {
   background: $page-background !important;

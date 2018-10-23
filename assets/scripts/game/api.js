@@ -23,7 +23,7 @@ const newGame = (size) => {
   })
 }
 
-const getGames = (size) => {
+const getGames = () => {
   /* Create a new empty game from the server
   returns server response which contains an (empty) game object if good */
   return $.ajax({
@@ -31,6 +31,16 @@ const getGames = (size) => {
       Authorization: `Token token=${store.user.token}`
     },
     url: config.apiUrl + '/games',
+    method: 'GET'
+  })
+}
+
+const getGame = (id) => {
+  return $.ajax({
+    headers: {
+      Authorization: `Token token=${store.user.token}`
+    },
+    url: config.apiUrl + '/games/' + id,
     method: 'GET'
   })
 }
@@ -54,6 +64,7 @@ const updateGame = () => {
 
 module.exports = {
   newGame,
+  getGame,
   getGames,
   updateGame
 }
