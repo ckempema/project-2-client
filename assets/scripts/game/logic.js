@@ -1,5 +1,5 @@
 'use strict'
-// TODO: Implement game logic here
+
 const store = require('../store.js')
 const Graph = require('./graph.js')
 const api = require('./api.js')
@@ -82,10 +82,10 @@ const onNodeClick = (row, col) => {
   if (store.currentGame !== null && store.currentGame !== undefined) {
     store.currentGame.takeTurn(row, col)
     api.updateGame()
-      .then(console.log)
+      .then()
       .catch(ui.failure)
   } else {
-    console.log('No Game Created') // NOTE: Remove console log
+    $('#game-messages').html(`<h6> ERROR: No game created</h6>`)
   }
 }
 

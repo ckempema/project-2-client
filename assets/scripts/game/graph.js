@@ -146,11 +146,10 @@ class Graph {
         this.moves += moveStr
         this._switchPlayer()
       } else {
-        console.log(`graph/takeTurn failed to setNode(${row},${col})`) // NOTE: log
-        // TODO: Output turn failure messages to html here
+        $('#game-messages').html(`<h6> Unable to place token </h6>`)
       }
     } else {
-      // TODO: Output game over failure message to html here
+      $('#game-messages').html(`<h6> Game Over. Make a new Game to continue playing </h6>`)
     }
   }
 
@@ -166,8 +165,8 @@ class Graph {
         $('#game-messages').html(`<h6> Game ${this.id} Waiting for Player: Red </h6>`)
         break
       default:
-        console.log(`ERROR: Invalid Current Player: ${this.currentPlayer}`)
-        console.log(`Setting Player to 'R'`) // NOTE: Remove console logs
+        this._setPlayer()
+        $('#game-messages').html(`<h4>ERROR: Invalid Current Player: ${this.currentPlayer} </h4> <h6>Player set to${this.currentPlayer}</h6>`)
     }
   }
 

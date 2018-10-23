@@ -5,11 +5,10 @@ const state = require('../states.js')
 
 const signUpSuccess = (response) => {
   $('#auth_messages').html('')
-  // TODO: Remove unnecessary data from output
   const userHTML = (`
     <h4> New User: ${response.user.email}</h4>
     `)
-  $('#auth_messages').append(userHTML)
+  $('#auth_messages').html(userHTML)
   $('#sign-up-form').trigger('reset')
   $('#sign-up-box').hide()
   $('#sign-in-box').show()

@@ -1,5 +1,5 @@
 'use strict'
-// TODO: Add a graph ui section
+// TODO: Write function headers for all functions
 // const showGameTemplate = require('../templates/game.handlebars') //single game template; no longer needed
 const showAllGamesTemplate = require('../templates/games_listing.handlebars')
 

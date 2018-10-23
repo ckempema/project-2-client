@@ -26,11 +26,11 @@ class Node {
           $(`#${gameID}-gameHex-${this.row}-${this.col}`).addClass('blue')
           return true
         default:
-          console.log(`INVALID node/setNode: ${fill} `) // NOTE: remove log
+          ('#game-messages').html(`<h6> ERROR: function setNode()--Invalid Player in: node.js/29</h6>`)
           return false
       }
     } else {
-      console.log(`ERROR node/setNode: Unable to set node`) // NOTE: remove log
+      ('#game-messages').html(`<h6> ERROR: function setNode()--Invalid Player in: node.js/33</h6>`)
       return false
     }
   }
