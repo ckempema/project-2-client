@@ -11,6 +11,8 @@ const signUpSuccess = (response) => {
     `)
   $('#auth_messages').append(userHTML)
   $('#sign-up-form').trigger('reset')
+  $('#sign-up-box').hide()
+  $('#sign-in-box').show()
 }
 
 const signInSuccess = (response) => {
@@ -36,7 +38,7 @@ const changePasswordSuccess = (response) => {
 }
 
 const signOutSuccess = (response) => {
-  $('#auth_messages').html(`Signed Out`)
+  $('#auth_messages').html(`<h5> Signed Out </h5>`)
   state.signedOut()
   // store.user = null // remove all stored data on logout
   // store.currentGame = null

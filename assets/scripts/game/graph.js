@@ -40,6 +40,7 @@ class Graph {
     this.generateBorderEdgeRelationships() // Generates the border nodes
     this.setAllEdgeRelationships() // Generates all edges for all nodes
     this.checkWin()
+    this._setPlayer()
   }
 
   setNodesFromMoves () {
@@ -50,7 +51,7 @@ class Graph {
       const color = mutMoves.substr(2, 1)
       this.board[row * this.size + col].setNode(color, this.id)
       mutMoves = mutMoves.slice(3, mutMoves.length)
-      this.complexity += 1 // increment complexity
+      this.status.complexity += 1 // increment complexity
     }
   }
 
@@ -158,13 +159,24 @@ class Graph {
     switch (this.currentPlayer) {
       case 'R':
         this.currentPlayer = 'B'
+        $('#game-messages').html(`<h6> Game ${this.id} Waiting for Player: Blue </h6>`)
         break
       case 'B':
         this.currentPlayer = 'R'
+        $('#game-messages').html(`<h6> Game ${this.id} Waiting for Player: Red </h6>`)
         break
       default:
         console.log(`ERROR: Invalid Current Player: ${this.currentPlayer}`)
         console.log(`Setting Player to 'R'`) // NOTE: Remove console logs
+    }
+  }
+
+  _setPlayer () {
+    /* Sets the current player based on status of red and blue arrays. Used when pulling in a game from the server */
+    if (this.red.length === this.blue.length) {
+      this.currentPlayer = 'R'
+    } else {
+      this.currentPlayer = 'B'
     }
   }
 

@@ -17,14 +17,15 @@ const connectBoard = (size, id) => {
   }
 }
 
-const onNewGame = () => {
+const onNewGame = (size) => {
   event.preventDefault()
-  const size = 9 // TODO Make Dynamic
   api.newGame(size)
     .then((response) => {
       ui.newGameSuccess(response)
       connectBoard(response.game.size, response.game.id)
       store.currentGame = new Graph(response.game)
+      $('#game-messages').html(`<h6> New Game Created ID: ${store.currentGame.id}    ${store.currentGame.size}x${store.currentGame.size}  Player: Red</h6>`)
+      $('#show-games-section').html(``)
     })
     .catch(ui.failure)
 }
@@ -32,18 +33,22 @@ const onNewGame = () => {
 const onGetGames = () => {
   api.getGames()
     .then((response) => {
-      if (store.currentGame !== null && store.currentGame !== undefined) { // Dont show the current game
-        response.games = response.games.filter(game => game.id !== store.currentGame.id)
-      }
-      ui.getGamesSuccess(response)
-      for (let i = 0; i < response.games.length; i++) {
-        const temp = new Graph(response.games[i]) // Display moves on previews
-        $(`#view-${response.games[i].id}`).on('click', () => {
-          setCurrentGame(response.games[i].id)
-        })
-        $(`#remove-${response.games[i].id}`).on('click', () => {
-          onDeleteGame(response.games[i].id)
-        })
+      if (response.games.length > 0) { // If games exist
+        if (store.currentGame !== null && store.currentGame !== undefined) { // Dont show the current game
+          response.games = response.games.filter(game => game.id !== store.currentGame.id)
+        }
+        ui.getGamesSuccess(response)
+        for (let i = 0; i < response.games.length; i++) {
+          const temp = new Graph(response.games[i]) // Display moves on previews
+          $(`#view-${response.games[i].id}`).on('click', () => {
+            setCurrentGame(response.games[i].id)
+          })
+          $(`#remove-${response.games[i].id}`).on('click', () => {
+            onDeleteGame(response.games[i].id)
+          })
+        }
+      } else {
+        $('#show-games-section').html('<h5> No Games Available </h5>')
       }
     })
     .catch(ui.failure)
@@ -61,6 +66,11 @@ const setCurrentGame = (id) => {
       ui.loadGameSuccess(response)
       store.currentGame = new Graph(response.game)
       connectBoard(response.game.size, response.game.id)
+      if (store.currentGame.currentPlayer === 'R') {
+        $('#game-messages').html(`<h6> Loaded Game ${store.currentGame.id} Player: Red`)
+      } else {
+        $('#game-messages').html(`<h6> Loaded Game ${store.currentGame.id} Player: Blue`)
+      }
     })
     .catch(ui.failure)
 }
