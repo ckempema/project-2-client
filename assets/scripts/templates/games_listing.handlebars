@@ -1,5 +1,6 @@
 {{#each games as |game|}}
-  <span class="container">
+
+  <div id="group-{{game.id}}" class="container">
     <h3> <small>ID: {{game.id}}</small></h3>
     <div id="board-{{game.id}}" class="cont-small"> </div>
     {{#if game.status}}
@@ -8,6 +9,9 @@
       <button id="view-{{game.id}}" data-id="{{game.id}}" class='btn btn-danger'> Play </button>
     {{/if}}
     <button id="remove-{{game.id}}" data-id="{{game.id}}" class='btn btn-danger'> Delete </button>
-  </span>
+  <br />
+  <br />
+  <br />
+  </div>
 
 {{/each}}

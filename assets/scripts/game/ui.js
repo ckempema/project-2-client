@@ -1,7 +1,6 @@
 'use strict'
 // TODO: Add a graph ui section
-const store = require('../store.js')
-const showGameTemplate = require('../templates/game.handlebars')
+// const showGameTemplate = require('../templates/game.handlebars') //single game template; no longer needed
 const showAllGamesTemplate = require('../templates/games_listing.handlebars')
 
 const drawBoard = (size, location, gameID, scale = 'regular') => {
@@ -53,7 +52,6 @@ const drawBoard = (size, location, gameID, scale = 'regular') => {
 const newGameSuccess = (response) => {
   const size = response.game.size
   drawBoard(size, 'game-board', response.game.id)
-  console.log(response) // NOTE: Remove Console.log from production environment
 }
 
 const getGamesSuccess = (response) => {
@@ -65,12 +63,16 @@ const getGamesSuccess = (response) => {
   }
 }
 
-const getGameSuccess = (response) => {
-  console.log(response)
-  const showGames = showGameTemplate({game: response.game})
-  $('#show-games-section').html('')
-  $('#show-games-section').append(showGames)
-  drawBoard(response.game.size, `board-${response.game.id}`, response.game.id, 'small')
+const loadGameSuccess = (response) => {
+  $(`#group-${response.game.id}`).remove() // Delete preview from listing
+  drawBoard(response.game.size, `game-board`, response.game.id) // Draw in board
+  document.body.scrollTop = 0 // For Safari
+  document.documentElement.scrollTop = 0 // For Chrome, Firefox, IE and Opera
+}
+
+const deleteSuccess = (gameID) => {
+  $(`#game-messages`).html(`<h6> Game ${gameID} Deleted </h6>`)
+  $(`#group-${gameID}`).remove() // Delete preview from listing
 }
 
 const failure = (response) => {
@@ -83,7 +85,8 @@ const failure = (response) => {
 
 module.exports = {
   newGameSuccess,
-  getGameSuccess,
   getGamesSuccess,
+  loadGameSuccess,
+  deleteSuccess,
   failure
 }

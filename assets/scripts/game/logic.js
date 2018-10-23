@@ -23,7 +23,7 @@ const onNewGame = () => {
   api.newGame(size)
     .then((response) => {
       ui.newGameSuccess(response)
-      connectBoard(size, response.game.id)
+      connectBoard(response.game.size, response.game.id)
       store.currentGame = new Graph(response.game)
     })
     .catch(ui.failure)
@@ -38,20 +38,29 @@ const onGetGames = () => {
       ui.getGamesSuccess(response)
       for (let i = 0; i < response.games.length; i++) {
         const temp = new Graph(response.games[i]) // Display moves on previews
-
+        $(`#view-${response.games[i].id}`).on('click', () => {
+          setCurrentGame(response.games[i].id)
+        })
+        $(`#remove-${response.games[i].id}`).on('click', () => {
+          onDeleteGame(response.games[i].id)
+        })
       }
     })
     .catch(ui.failure)
 }
 
-const onGetGame = (id) => {
-  api.getGame(1)
+const onDeleteGame = (id) => {
+  api.deleteGame(id)
+    .then(() => { ui.deleteSuccess(id) })
+    .catch(ui.failure)
+}
+
+const setCurrentGame = (id) => {
+  api.loadGame(id)
     .then((response) => {
-      ui.getGameSuccess(response)
-      for (let i = 0; i < response.games.length; i++) {
-        const temp = new Graph(response.games[i])
-        console.log(temp)
-      }
+      ui.loadGameSuccess(response)
+      store.currentGame = new Graph(response.game)
+      connectBoard(response.game.size, response.game.id)
     })
     .catch(ui.failure)
 }
@@ -72,7 +81,6 @@ const onNodeClick = (row, col) => {
 
 module.exports = {
   onNewGame,
-  onGetGame,
   onGetGames,
   onNodeClick
 }
