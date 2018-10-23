@@ -10,6 +10,7 @@ const signUpSuccess = (response) => {
     <h4> New User: ${response.user.email}</h4>
     `)
   $('#auth_messages').append(userHTML)
+  $('#sign-up-form').trigger('reset')
 }
 
 const signInSuccess = (response) => {
@@ -21,6 +22,7 @@ const signInSuccess = (response) => {
   $('#user-message').append(userHTML)
   store.user = response.user
   state.signedIn()
+  $('#sign-in-form').trigger('reset')
 }
 
 const changePasswordSuccess = (response) => {
@@ -30,6 +32,7 @@ const changePasswordSuccess = (response) => {
     `)
   $('#auth_messages').append(outputHTML)
   state.signedIn()
+  $('#change-password-form').trigger('reset')
 }
 
 const signOutSuccess = (response) => {

@@ -30,6 +30,10 @@ const resetData = () => {
   $('#game-messages').html('')
   $('#user-message').html('')
   $('#show-games-section').html('')
+
+  $('#sign-in-form').trigger('reset')
+  $('#sign-up-form').trigger('reset')
+  $('#change-password-form').trigger('reset')
 }
 module.exports = {
   signedOut,

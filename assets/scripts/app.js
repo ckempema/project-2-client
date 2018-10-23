@@ -19,11 +19,20 @@ const initEventListeners = () => {
   $('#get-games-button').on('click', logic.onGetGames)
 
   $('#show-sign-in-button').on('click', () => { $('#sign-in-box').show() })
-  $('#cancel-sign-in-button').on('click', () => { $('#sign-in-box').hide() })
+  $('#cancel-sign-in-button').on('click', () => {
+    $('#sign-in-box').hide()
+    $('#sign-in-form').trigger('reset')
+  })
 
   $('#show-sign-up-button').on('click', () => { $('#sign-up-box').show() })
-  $('#cancel-sign-up-button').on('click', () => { $('#sign-up-box').hide() })
+  $('#cancel-sign-up-button').on('click', () => {
+    $('#sign-up-box').hide()
+    $('#sign-up-form').trigger('reset')
+  })
 
   $('#show-ch-pwd-button').on('click', () => { $('#ch-pwd-box').show() })
-  $('#cancel-ch-pwd-button').on('click', () => { $('#ch-pwd-box').hide() })
+  $('#cancel-ch-pwd-button').on('click', () => {
+    $('#ch-pwd-box').hide()
+    $('#change-password-form').trigger('reset')
+  })
 }
