@@ -19,7 +19,7 @@ const connectBoard = (size) => {
 
 const onNewGame = () => {
   event.preventDefault()
-  const size = 11 // TODO Make Dynamic
+  const size = 9 // TODO Make Dynamic
   api.newGame(size)
     .then((response) => {
       ui.newGameSuccess(response)

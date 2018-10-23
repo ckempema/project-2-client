@@ -9,6 +9,7 @@ const signedOut = () => {
   $('#game').hide()
 
   $('#unauthed-buttons').show()
+  resetData()
 }
 
 const signedIn = () => {
@@ -24,9 +25,10 @@ const signedIn = () => {
 const resetData = () => {
   store.currentGame = null
   store.user = null
-  $('#auth_messages').html()
-  $('#gameBoard').html()
-  $('#game-messages').html()
+  $('#auth_messages').html('')
+  $('#gameBoard').html('')
+  $('#game-messages').html('')
+  $('#user-message').html('')
 }
 module.exports = {
   signedOut,
