@@ -1,4 +1,5 @@
 'use strict'
+const store = require('./store.js')
 
 const signedOut = () => {
   $('#authed-buttons').hide()
@@ -6,6 +7,8 @@ const signedOut = () => {
   $('#sign-up-box').hide()
   $('#ch-pwd-box').hide()
   $('#game').hide()
+
+  $('#unauthed-buttons').show()
 }
 
 const signedIn = () => {
@@ -18,7 +21,15 @@ const signedIn = () => {
   $('#game').show()
 }
 
+const resetData = () => {
+  store.currentGame = null
+  store.user = null
+  $('#auth_messages').html()
+  $('#gameBoard').html()
+  $('#game-messages').html()
+}
 module.exports = {
   signedOut,
-  signedIn
+  signedIn,
+  resetData
 }

@@ -7,26 +7,29 @@ const MATCHED_WEIGHT = 1
 const Node = require('./node.js')
 
 class Graph {
-  /* A graph class that stores the gameboard as a two dimensional array of nodes,
+  /* A graph class that stores the gameboard as a hash of nodes,
   also contains all gameplay structures logic such as switching player, taking turns, and checking for a winner
   */
-  constructor (size) {
-    this.size = size
+  constructor (apiResponse) {
+    this.id = apiResponse.id
+    this.user = apiResponse.user
+    this.size = apiResponse.size
     this.board = {} // TODO Change documentation from 2d array to object
     this.currentPlayer = 'R' // NOTE: First player will always be red with this
     this.red = []
     this.blue = []
     this.status = {
-      over: false,
+      over: apiResponse.status,
       winner: null,
       complexity: 0
     }
+    this.moves = apiResponse.moves
 
     // Create size*size array as gameboard data structure:
     // For size rows create an array containing size nodes
     let idCount = 0
-    for (let row = 0; row < size; row++) {
-      for (let col = 0; col < size; col++) {
+    for (let row = 0; row < this.size; row++) {
+      for (let col = 0; col < this.size; col++) {
         const tempNode = new Node(idCount, row, col)
         this.board[tempNode.id] = tempNode
         idCount++
@@ -119,6 +122,8 @@ class Graph {
         }
         this.setNodeEdges(row, col) // Check the edges of the adjacent nodes
         this.checkWin()
+        const moveStr = row.toString(16) + col.toString(16) + this.currentPlayer
+        this.moves += moveStr
         this._switchPlayer()
       } else {
         console.log(`graph/takeTurn failed to setNode(${row},${col})`) // NOTE: log

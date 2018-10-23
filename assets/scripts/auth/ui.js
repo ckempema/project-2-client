@@ -16,7 +16,7 @@ const signInSuccess = (response) => {
   $('#auth_messages').html('')
   // TODO: Remove unnecessary data from output
   const userHTML = (`
-    <h6>${response.user.email}<h6>
+    <h5>${response.user.email}<h5>
     `)
   $('#user-message').append(userHTML)
   store.user = response.user
@@ -34,6 +34,7 @@ const changePasswordSuccess = (response) => {
 
 const signOutSuccess = (response) => {
   $('#auth_messages').html(`Signed Out`)
+  state.signedOut()
   // store.user = null // remove all stored data on logout
   // store.currentGame = null
 }

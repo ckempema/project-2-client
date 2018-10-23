@@ -2,7 +2,8 @@
 // TODO: Add a graph ui section
 
 const drawBoard = (size) => {
-  // WARNING: DO NOT CHANGE THIS FUNCTION WITHOUT TIME TO FIX EVERYTHING YOU JUST MESSED UP. This function is an absolute mess of math and should needs to be fixed, however any minor change, no matter how small, will screw things up and be very annoying. So a total rewrite will be required. Be warned
+  // WARNING: IT IS IMPOSSIBLE TO MODIFY THIS FUNCTION WITHOUT LASTING EFFECTS. FIX WHEN ABLE WITH PROPER TESTING
+
   $('#gameBoard').html('') // Empty the gameboard
   for (let i = 0; i < size + 2; i++) {
     const rowID = `#row-${i}`
@@ -43,21 +44,27 @@ const drawBoard = (size) => {
 }
 
 const newGameSuccess = (response) => {
-  const size = 9
+  const size = response.game.size
   drawBoard(size)
-  $('#game-messages').text(response)
+  console.log(response) // NOTE: Remove Console.log from production environment
+}
+
+const getGamesSuccess = (response) => {
+  $('#game-messages').html(response)
+  console.log(response)
 }
 
 const failure = (response) => {
   $('#game-messages').html('')
   const responseHTML = (`
-    <h3>ERROR: Failed to authenticate with server</h3>
-    `)
+    <h4>ERROR ${response.status}: ${response.statusText}</h4>
+  `)
   $('#game-messages').append(responseHTML)
   $('#game-messages').append(response)
 }
 
 module.exports = {
   newGameSuccess,
+  getGamesSuccess,
   failure
 }

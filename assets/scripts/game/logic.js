@@ -19,13 +19,21 @@ const connectBoard = (size) => {
 
 const onNewGame = () => {
   event.preventDefault()
-  const size = 9 // TODO Make Dynamic
+  const size = 11 // TODO Make Dynamic
   api.newGame(size)
-    .then(() => {
-      ui.newGameSuccess()
+    .then((response) => {
+      ui.newGameSuccess(response)
       connectBoard(size)
-      store.currentGame = new Graph(size)
+      store.currentGame = new Graph(response.game)
+      console.log(store.currentGame)
+      console.log(store.user)
     })
+    .catch(ui.failure)
+}
+
+const onGetGames = () => {
+  api.getGames()
+    .then(ui.getGamesSuccess)
     .catch(ui.failure)
 }
 
@@ -35,6 +43,9 @@ const onNodeClick = (row, col) => {
 
   if (store.currentGame !== null && store.currentGame !== undefined) {
     store.currentGame.takeTurn(row, col)
+    api.updateGame()
+      .then(console.log)
+      .catch(ui.failure)
   } else {
     console.log('No Game Created') // NOTE: Remove console log
   }
@@ -42,5 +53,6 @@ const onNodeClick = (row, col) => {
 
 module.exports = {
   onNewGame,
+  onGetGames,
   onNodeClick
 }
