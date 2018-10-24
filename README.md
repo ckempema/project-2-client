@@ -1,8 +1,46 @@
 # Project 2: Hex Game
+`NOTE: This readme is replicated in its entirety for both the client and api readmes`
 ## What is Hex?
-  Hex is a graph based game in which two players, each controlling two parallel sides of a square board, attempt to place pieces in a way that connects their sides before the opponent is able to connect theirs. It has been used in many instances of graph theory evaluation as well as research into computer algoritms.
+  Hex is a graph based game in which two players, each controlling two parallel sides of a parallelogram board, attempt to place pieces in a way that connects their sides of the board before the opponent is able to connect theirs. It has been used in many instances of graph theory and game theory, with a particular focus on computer algorithms.
 
   ![Sample Game Board](public/gameboard_v1.png)
+
+
+## Documentation
+  ### Locations:
+  | Item | Link |
+  |:------:|:------:|
+  | Client Host  | https://ckempema.github.io/project-2-client/ |
+  | Backend Host  | https://still-meadow-60017.herokuapp.com  |
+  | Client Repo  | https://github.com/ckempema/project-2-client |
+  | Backend Repo | https://github.com/ckempema/hex-api |
+
+  The game is entirely run in the client browser, however the backend will store users and all the games they have created, allowing for a user to review previous games.
+
+  ### Technologies Used
+  #### Front End
+  - Javascript
+  - Bootstrap
+  - Handlebars
+  - JQuery
+  - HTML
+  - CSS/SASS
+  #### Back End
+  - Ruby
+  - Rails
+  - Heroku App
+
+  ### Unsolved Problems
+  A majority of the problems existing in the current version relate to user experience or future functionality. The user experience could be improved, particularly in terms of explaining what is going on on the front page. I also planned to implement an AI for the user to play against, but time constraints prevented me from making a serious attempt before the project MVP was due.
+
+  ### Hurdles
+  When I first started out, I had a good plan that stayed with me throughout the project, as documented below. However I encountered major issues trying to draw a board that looked halfway decent, and then structuring my data in a way that it was useable. The id structure of the board can be seen below.
+
+##### Hexagon Layout and Numbering Systems
+  ![hex layout](public/hex_layout_V1.png)
+
+  Hexagons involved in the game itself (not part of the border or hidden) are referenced as a row and column, or as an id derived from the row and column. The gameboard is structured such that the top left corner has a position of 0,0 which requires offsetting from the actual rectangle positions for each game piece. The math to do this offset dynamically for any size board, as well as draw out the appropriate boarders, took significantly more time than planned, which left me struggling for time later on.
+
 ## Project Planning
 ### User Stories
 #### User Authentication
@@ -59,7 +97,5 @@
 ### Wireframes
   ##### Post Login Webpage View
   ![Wireframe Version 1](public/Wireframe_V1.png)
-### ERB
-  ![ERB Sketch V1](public/ERB_V1.png)
-### Basic File Structure
-  ![File Structure Image](public/fileStructure_V1.png)
+### ERD
+  ![ERD Sketch V1](public/ERB_V1.png)

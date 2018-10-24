@@ -157,7 +157,6 @@ class Graph {
         } else {
           $('#game-messages').html(`<h6> Start a New Game</h6>`)
         }
-
       } else {
         $('#game-messages').html(`<h6> Unable to place token </h6>`)
       }
