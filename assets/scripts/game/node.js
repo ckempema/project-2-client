@@ -26,11 +26,11 @@ class Node {
           $(`#${gameID}-gameHex-${this.row}-${this.col}`).addClass('blue')
           return true
         default:
-          ('#game-messages').html(`<h6> ERROR: function setNode()--Invalid Player in: node.js/29</h6>`)
+          $('#game-messages').html(`<h6> ERROR: function setNode()--Invalid Player in: node.js/29</h6>`)
           return false
       }
     } else {
-      ('#game-messages').html(`<h6> ERROR: function setNode()--Invalid Player in: node.js/33</h6>`)
+      $('#game-messages').html(`<h6> ERROR: function setNode()--Invalid Player in: node.js/33</h6>`)
       return false
     }
   }

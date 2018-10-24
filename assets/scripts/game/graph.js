@@ -179,25 +179,12 @@ class Graph {
     }
   }
 
-  checkWin () {
-    const data = {} // Store info for dikstras algoritm to run
-    let unsearched = null
-
-    if (this.currentPlayer === 'R') {
-      unsearched = this.red.slice()
-    } else if (this.currentPlayer === 'B') {
-      unsearched = this.blue.slice()
-    } else { // Validation check  (should never be reached)
-      console.log(`ERROR: Invalid Player ${this.currentPlayer} in graph/checkWin`)
-      return false // Stop the function
-    }
-
+  dijkstras (graph, startId) {
+    const data = {}
+    const unsearched = graph.slice()
     for (let i = 0; i < unsearched.length; i++) { // Initalize data for nodes
       data[unsearched[i].id] = {dist: Infinity, prev: undefined}
     }
-
-    // Set the starting node
-    data[`${this.currentPlayer}1`] = {dist: 0, prev: null} // R1 or B1
 
     while (unsearched.length > 0) { // Until all nodes have been searched
       let lowestVal = data[unsearched[0].id].dist
@@ -210,12 +197,13 @@ class Graph {
         }
       }
 
+      data[startId] = {dist: 0, prev: null} // Starting Node
+
       const currentNode = unsearched[lowestIdx]
 
       for (const key in currentNode.coloredEdges) { // Search all edges of connected node
         const alt = data[currentNode.id].dist + currentNode.coloredEdges[key]
         if (data[key] !== undefined) {
-          // console.log(`Data Key Defined`, currentNode.id, key,alt,data[key].dist)
           if (alt < data[key].dist) {
             data[key].dist = alt
             data[key].prev = currentNode.id
@@ -224,7 +212,23 @@ class Graph {
       }
       unsearched.splice(lowestIdx, 1) // Remove node from unsearched
     }
+    return data
+  }
 
+  checkWin () {
+    let data = {} // Store info for dikstras algoritm to run
+
+    // Run dijkstras with the correct data
+    if (this.currentPlayer === 'R') {
+      data = this.dijkstras(this.red, 'R1')
+    } else if (this.currentPlayer === 'B') {
+      data = this.dijkstras(this.blue, 'B1')
+    } else { // Validation check  (should never be reached)
+      console.log(`ERROR: Invalid Player ${this.currentPlayer} in graph/checkWin`)
+      return false // Stop the function
+    }
+
+    // Check if a winner exists
     if (data[`${this.currentPlayer}2`].dist < Infinity) { // if path exists
       let current = this.board[`${this.currentPlayer}2`]
       while (data[current.id].prev !== undefined && data[current.id].prev !== null) {
