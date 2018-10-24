@@ -20,6 +20,7 @@ const initEventListeners = () => {
   $('#new-large-button').on('click', () => { logic.onNewGame(13) })
   $('#get-games-button').on('click', logic.onGetGames)
   $('#ai-move-button').on('click', logic.onAiTurn)
+  $('#fill-button').on('click', logic.onFill)
 
   $('#show-sign-in-button').on('click', () => { $('#sign-in-box').show() })
   $('#cancel-sign-in-button').on('click', () => {

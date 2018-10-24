@@ -90,15 +90,31 @@ const onNodeClick = (row, col) => {
 }
 
 const onAiTurn = () => {
-  store.currentGame.turnAI()
-  api.updateGame()
-    .then()
-    .catch(ui.failure)
+  if (store.currentGame !== null && store.currentGame !== undefined) {
+    store.currentGame.turnAI()
+    api.updateGame()
+      .then()
+      .catch(ui.failure)
+  } else {
+    $('#game-messages').html(`<h6> ERROR: No game created</h6>`)
+  }
+}
+
+const onFill = () => {
+  if (store.currentGame !== null && store.currentGame !== undefined) {
+    store.currentGame.fill()
+    api.updateGame()
+      .then()
+      .catch(ui.failure)
+  } else {
+    $('#game-messages').html(`<h6> ERROR: No game created</h6>`)
+  }
 }
 
 module.exports = {
   onNewGame,
   onGetGames,
   onNodeClick,
-  onAiTurn
+  onAiTurn,
+  onFill
 }

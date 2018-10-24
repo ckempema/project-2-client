@@ -157,6 +157,7 @@ class Graph {
         } else {
           $('#game-messages').html(`<h6> Start a New Game</h6>`)
         }
+        return true
       } else {
         $('#game-messages').html(`<h6> Unable to place token </h6>`)
       }
@@ -243,14 +244,26 @@ class Graph {
   }
 
   turnAI () {
-    if (!this.status.over) {
-      const redData = this.dijkstras(Object.values(this.board), 'R1', true)
-      const blueData = this.dijkstras(Object.values(this.board), 'B1', true)
-      const blueNode = blueData['B2'].prev
-      const redNode = redData['R2'].prev
-      console.log(blueNode, redNode)
-      console.log(redData, blueData)
-      console.log(this.board)
+    let limit = 0
+    while (limit < 1000) {
+      const row = Math.floor(Math.random() * this.size)
+      const col = Math.floor(Math.random() * this.size)
+      if (this.takeTurn(row, col)) {
+        return true
+      } else {
+        limit += 1
+      }
+    }
+    $('#game-messages').html(`<h6> Unable to place AI Token given limits </h6>`)
+  }
+
+  fill() {
+    let limit = 0
+    while (limit < 10000) {
+      const row = Math.floor(Math.random() * this.size)
+      const col = Math.floor(Math.random() * this.size)
+      this.takeTurn(row, col)
+      limit += 1
     }
   }
 
