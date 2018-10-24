@@ -21,9 +21,9 @@ class Graph {
     this.status = {
       over: apiResponse.status,
       winner: null,
-      complexity: 0
     }
     this.moves = apiResponse.moves
+    this.movesMade = 0
 
     // Create size*size array as gameboard data structure:
     // For size rows create an array containing size nodes
@@ -52,6 +52,7 @@ class Graph {
       this.board[row * this.size + col].setNode(color, this.id)
       mutMoves = mutMoves.slice(3, mutMoves.length)
       this.status.complexity += 1 // increment complexity
+      this.movesMade += 1
     }
   }
 
@@ -152,6 +153,7 @@ class Graph {
         this.checkWin()
         const moveStr = row.toString(16) + col.toString(16) + this.currentPlayer
         this.moves += moveStr
+        this.movesMade += 1
         this._switchPlayer()
         if (this.status.over) {
           $('#game-messages').html(`<h6> Start a New Game</h6>`)
@@ -184,9 +186,9 @@ class Graph {
 
   _setPlayer () {
     /* Sets the current player based on status of red and blue arrays. Used when pulling in a game from the server */
-    console.log('Red',this.red.length)
+    console.log('Red', this.red.length)
     console.log('Blue', this.blue.length)
-    if (this.red.length === this.blue.length) {
+    if (this.movesMade % 2 === 0) {
       this.currentPlayer = 'R'
     } else {
       this.currentPlayer = 'B'
@@ -258,7 +260,7 @@ class Graph {
     $('#game-messages').html(`<h6> Unable to place AI Token given limits </h6>`)
   }
 
-  fill() {
+  fill () {
     let limit = 0
     while (limit < 10000) {
       const row = Math.floor(Math.random() * this.size)
@@ -269,27 +271,31 @@ class Graph {
   }
 
   checkWin () {
-    let data = {} // Store info for dikstras algoritm to run
+    const check = ['R','B']
+    for (let i = 0; i < check.length; i++) {
+      const player = check[i]
+      let data = {} // Store info for dikstras algoritm to run
 
-    // Run dijkstras with the correct data
-    if (this.currentPlayer === 'R') {
-      data = this.dijkstras(this.red, 'R1')
-    } else if (this.currentPlayer === 'B') {
-      data = this.dijkstras(this.blue, 'B1')
-    } else { // Validation check  (should never be reached)
-      console.log(`ERROR: Invalid Player ${this.currentPlayer} in graph/checkWin`)
-      return false // Stop the function
-    }
-
-    // Check if a winner exists
-    if (data[`${this.currentPlayer}2`].dist < Infinity) { // if path exists
-      let current = this.board[`${this.currentPlayer}2`]
-      while (data[current.id].prev !== undefined && data[current.id].prev !== null) {
-        $(`#${this.id}-gameHex-${current.row}-${current.col}`).addClass(`win-${this.currentPlayer}`)
-        current = this.board[data[current.id].prev] // Go to previous node
+      // Run dijkstras with the correct data
+      if (player === 'R') {
+        data = this.dijkstras(this.red, 'R1')
+      } else if (player === 'B') {
+        data = this.dijkstras(this.blue, 'B1')
+      } else { // Validation check  (should never be reached)
+        console.log(`ERROR: Invalid Player ${player} in graph/checkWin`)
+        return false // Stop the function
       }
-      this.status.over = true
-      this.status.winner = this.currentPlayer
+
+      // Check if a winner exists
+      if (data[`${player}2`].dist < Infinity) { // if path exists
+        let current = this.board[`${player}2`]
+        while (data[current.id].prev !== undefined && data[current.id].prev !== null) {
+          $(`#${this.id}-gameHex-${current.row}-${current.col}`).addClass(`win-${player}`)
+          current = this.board[data[current.id].prev] // Go to previous node
+        }
+        this.status.over = true
+        this.status.winner = player
+      }
     }
   }
 }
