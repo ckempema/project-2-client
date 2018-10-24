@@ -89,8 +89,16 @@ const onNodeClick = (row, col) => {
   }
 }
 
+const onAiTurn = () => {
+  store.currentGame.turnAI()
+  api.updateGame()
+    .then()
+    .catch(ui.failure)
+}
+
 module.exports = {
   onNewGame,
   onGetGames,
-  onNodeClick
+  onNodeClick,
+  onAiTurn
 }

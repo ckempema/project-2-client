@@ -1,7 +1,7 @@
 'use strict'
 
 //
-const STANDARD_WEIGHT = 100
+const STANDARD_WEIGHT = 2
 const MATCHED_WEIGHT = 1
 
 const Node = require('./node.js')
@@ -63,22 +63,30 @@ class Graph {
     const R2 = new Node('R2', Infinity, Infinity)
     for (let col = 0; col < this.size; col++) {
       this.board[col].coloredEdges['B1'] = MATCHED_WEIGHT
+      this.board[col].allEdges['B1'] = MATCHED_WEIGHT
       this.blue.push(this.board[col])
       B1.coloredEdges[col] = MATCHED_WEIGHT
+      B1.allEdges[col] = MATCHED_WEIGHT
       const id = (this.size) * (this.size - 1) + col
       this.board[id].coloredEdges['B2'] = MATCHED_WEIGHT
+      this.board[id].allEdges['B2'] = MATCHED_WEIGHT
       this.blue.push(this.board[id])
       B2.coloredEdges[id] = MATCHED_WEIGHT
+      B2.allEdges[id] = MATCHED_WEIGHT
     }
     for (let row = 0; row < this.size; row++) {
       const leftId = row * this.size
       const rightId = row * this.size + this.size - 1
       this.board[leftId].coloredEdges['R1'] = MATCHED_WEIGHT
+      this.board[leftId].allEdges['R1'] = MATCHED_WEIGHT
       this.red.push(this.board[leftId])
       R1.coloredEdges[leftId] = MATCHED_WEIGHT
+      R1.allEdges[leftId] = MATCHED_WEIGHT
       this.board[rightId].coloredEdges['R2'] = MATCHED_WEIGHT
+      this.board[rightId].allEdges['R2'] = MATCHED_WEIGHT
       this.red.push(this.board[rightId])
       R2.coloredEdges[rightId] = MATCHED_WEIGHT
+      R2.allEdges[rightId] = MATCHED_WEIGHT
     }
     this.board['R1'] = R1
     this.board['R2'] = R2
@@ -144,7 +152,12 @@ class Graph {
         this.checkWin()
         const moveStr = row.toString(16) + col.toString(16) + this.currentPlayer
         this.moves += moveStr
-        this._switchPlayer()
+        if (!this.status.over) {
+          this._switchPlayer()
+        } else {
+          $('#game-messages').html(`<h6> Start a New Game</h6>`)
+        }
+
       } else {
         $('#game-messages').html(`<h6> Unable to place token </h6>`)
       }
@@ -179,7 +192,7 @@ class Graph {
     }
   }
 
-  dijkstras (graph, startId) {
+  dijkstras (graph, startId, all = false) {
     const data = {}
     const unsearched = graph.slice()
     for (let i = 0; i < unsearched.length; i++) { // Initalize data for nodes
@@ -190,6 +203,8 @@ class Graph {
       let lowestVal = data[unsearched[0].id].dist
       let lowestIdx = 0
 
+      data[startId] = {dist: 0, prev: null} // Starting Node
+
       for (let i = 1; i < unsearched.length; i++) { // Find the shortest dist
         if (data[unsearched[i].id].dist < lowestVal) {
           lowestVal = data[unsearched[i].id].dist
@@ -197,22 +212,47 @@ class Graph {
         }
       }
 
-      data[startId] = {dist: 0, prev: null} // Starting Node
-
       const currentNode = unsearched[lowestIdx]
-
-      for (const key in currentNode.coloredEdges) { // Search all edges of connected node
-        const alt = data[currentNode.id].dist + currentNode.coloredEdges[key]
-        if (data[key] !== undefined) {
-          if (alt < data[key].dist) {
-            data[key].dist = alt
-            data[key].prev = currentNode.id
+      // console.log(currentNode, data[currentNode.id])
+      if (all === true) { // Seach entire graph
+        for (const key in currentNode.allEdges) { // Search all edges of connected node
+          // console.log(`key: ${key} value: ${currentNode.allEdges[key]}`)
+          const alt = data[currentNode.id].dist + currentNode.allEdges[key]
+          // console.log(currentNode.id)
+          if (data[key] !== undefined) {
+            if (alt < data[key].dist) {
+              data[key].dist = alt
+              data[key].prev = currentNode.id
+              // console.log(`${key} less than ${alt}`)
+            }
+          }
+        }
+      } else { // Only search colored Nodes
+        for (const key in currentNode.coloredEdges) { // Search all edges of connected node
+          const alt = data[currentNode.id].dist + currentNode.coloredEdges[key]
+          if (data[key] !== undefined) {
+            if (alt < data[key].dist) {
+              data[key].dist = alt
+              data[key].prev = currentNode.id
+            }
           }
         }
       }
       unsearched.splice(lowestIdx, 1) // Remove node from unsearched
     }
     return data
+  }
+
+  turnAI () {
+    if (!this.status.over) {
+      const redData = this.dijkstras(Object.values(this.board), 'R1', true)
+      const blueData = this.dijkstras(Object.values(this.board), 'B1', true)
+      const blueNode = blueData['B2'].prev
+      const redNode = redData['R2'].prev
+      console.log(blueNode, redNode)
+      console.log(redData, blueData)
+      console.log(this.board)
+    }
   }
 
   checkWin () {
