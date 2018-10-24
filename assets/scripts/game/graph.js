@@ -39,8 +39,8 @@ class Graph {
     this.setNodesFromMoves() // Fills in the appropriate colors for moves made
     this.generateBorderEdgeRelationships() // Generates the border nodes
     this.setAllEdgeRelationships() // Generates all edges for all nodes
-    this.checkWin()
     this._setPlayer()
+    this.checkWin()
   }
 
   setNodesFromMoves () {
@@ -152,9 +152,8 @@ class Graph {
         this.checkWin()
         const moveStr = row.toString(16) + col.toString(16) + this.currentPlayer
         this.moves += moveStr
-        if (!this.status.over) {
-          this._switchPlayer()
-        } else {
+        this._switchPlayer()
+        if (this.status.over) {
           $('#game-messages').html(`<h6> Start a New Game</h6>`)
         }
         return true
@@ -185,6 +184,8 @@ class Graph {
 
   _setPlayer () {
     /* Sets the current player based on status of red and blue arrays. Used when pulling in a game from the server */
+    console.log('Red',this.red.length)
+    console.log('Blue', this.blue.length)
     if (this.red.length === this.blue.length) {
       this.currentPlayer = 'R'
     } else {
