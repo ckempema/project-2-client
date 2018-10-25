@@ -20,7 +20,7 @@ class Graph {
     this.blue = []
     this.status = {
       over: apiResponse.status,
-      winner: null,
+      winner: null
     }
     this.moves = apiResponse.moves
     this.movesMade = 0
@@ -271,7 +271,7 @@ class Graph {
   }
 
   checkWin () {
-    const check = ['R','B']
+    const check = ['R', 'B']
     for (let i = 0; i < check.length; i++) {
       const player = check[i]
       let data = {} // Store info for dikstras algoritm to run

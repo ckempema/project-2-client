@@ -4,7 +4,7 @@
 const showAllGamesTemplate = require('../templates/games_listing.handlebars')
 
 const drawBoard = (size, location, gameID, scale = 'regular') => {
-  // WARNING: IT IS IMPOSSIBLE TO MODIFY THIS FUNCTION WITHOUT LASTING EFFECTS. FIX WHEN ABLE WITH PROPER TESTING
+  // WARNING: IT IS IMPOSSIBLE TO MODIFY THIS FUNCTION WITHOUT LASTING EFFECTS. FIX WHEN ABLE
   let classMod = ''
   if (scale !== 'regular') {
     classMod = '-small'
