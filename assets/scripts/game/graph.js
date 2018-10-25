@@ -186,8 +186,6 @@ class Graph {
 
   _setPlayer () {
     /* Sets the current player based on status of red and blue arrays. Used when pulling in a game from the server */
-    console.log('Red', this.red.length)
-    console.log('Blue', this.blue.length)
     if (this.movesMade % 2 === 0) {
       this.currentPlayer = 'R'
     } else {

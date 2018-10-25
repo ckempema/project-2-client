@@ -26,7 +26,7 @@ const resetData = () => {
   store.currentGame = null
   store.user = null
   $('#auth_messages').html('')
-  $('#gameBoard').html('')
+  $('#game-board').html('')
   $('#game-messages').html('')
   $('#user-message').html('')
   $('#show-games-section').html('')
