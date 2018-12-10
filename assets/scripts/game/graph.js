@@ -280,7 +280,7 @@ class Graph {
       } else if (player === 'B') {
         data = this.dijkstras(this.blue, 'B1')
       } else { // Validation check  (should never be reached)
-         $('#game-messages').html(`ERROR: Invalid Player ${player} in graph/checkWin`)
+        $('#game-messages').html(`ERROR: Invalid Player ${player} in graph/checkWin`)
         return false // Stop the function
       }
 
